@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 
 public final class Preferences {
 
@@ -13,6 +14,10 @@ public final class Preferences {
 
   private Preferences(Application app) {
     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(app);
+  }
+
+  public static Preferences of(@NonNull Application app) {
+    return new Preferences(app);
   }
 
   public SharedPreferences.Editor getEditor() {
@@ -29,13 +34,5 @@ public final class Preferences {
   @SuppressLint("CommitPrefEdits")
   public void discardChanges() {
     editor = sharedPreferences.edit();
-  }
-
-  public <T> void set(TypedPreference<T> preference, T value) {
-    preference.set(getEditor(), value);
-  }
-
-  public <T> T get(TypedPreference<T> preference) {
-    return preference.get(sharedPreferences);
   }
 }

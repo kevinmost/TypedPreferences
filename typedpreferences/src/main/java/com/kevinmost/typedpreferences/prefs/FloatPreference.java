@@ -4,8 +4,8 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public class FloatPreference extends BaseTypedPreference<Float> {
-  public FloatPreference(@NonNull String key, @Nullable OnPreferenceSetListener<Float>
+final class FloatPreference extends BaseTypedPreference<Float> {
+  FloatPreference(@NonNull String key, @Nullable OnPreferenceSetListener<Float>
       onPreferenceSetListener, @NonNull Float defaultValue) {
     super(key, onPreferenceSetListener, defaultValue);
   }

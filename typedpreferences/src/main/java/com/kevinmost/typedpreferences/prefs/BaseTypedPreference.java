@@ -16,11 +16,20 @@ abstract class BaseTypedPreference<T> implements TypedPreference<T> {
   @NonNull
   protected final T defaultValue;
 
-  public BaseTypedPreference(@NonNull String key,
-                             @Nullable OnPreferenceSetListener<T> onPreferenceSetListener,
-                             @NonNull T defaultValue) {
+  BaseTypedPreference(@NonNull String key,
+                      @Nullable OnPreferenceSetListener<T> onPreferenceSetListener,
+                      @NonNull T defaultValue) {
     this.key = key;
     this.onPreferenceSetListener = onPreferenceSetListener;
     this.defaultValue = defaultValue;
   }
+
+  @CallSuper
+  public void set(SharedPreferences.Editor editor, T value) {
+    if (onPreferenceSetListener != null) {
+      onPreferenceSetListener.onPreferenceSet(value);
+    }
+  }
+
+  public abstract T get(SharedPreferences preferences);
 }

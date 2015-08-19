@@ -4,9 +4,9 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public class BooleanPreference extends BaseTypedPreference<Boolean> {
+final class BooleanPreference extends BaseTypedPreference<Boolean> {
 
-  public BooleanPreference(@NonNull String key, @Nullable OnPreferenceSetListener<Boolean>
+  BooleanPreference(@NonNull String key, @Nullable OnPreferenceSetListener<Boolean>
       onPreferenceSetListener, @NonNull Boolean defaultValue) {
     super(key, onPreferenceSetListener, defaultValue);
   }

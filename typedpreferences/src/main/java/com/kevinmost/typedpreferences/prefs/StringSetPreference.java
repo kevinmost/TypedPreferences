@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 
 import java.util.Set;
 
-public class StringSetPreference extends BaseTypedPreference<Set<String>> {
+public final class StringSetPreference extends BaseTypedPreference<Set<String>> {
   public StringSetPreference(@NonNull String key, @Nullable OnPreferenceSetListener<Set<String>>
       onPreferenceSetListener, @NonNull Set<String> defaultValue) {
     super(key, onPreferenceSetListener, defaultValue);

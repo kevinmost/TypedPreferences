@@ -4,9 +4,9 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public class IntegerPreference extends BaseTypedPreference<Integer> {
+final class IntegerPreference extends BaseTypedPreference<Integer> {
 
-  public IntegerPreference(@NonNull String key, @Nullable OnPreferenceSetListener<Integer>
+  IntegerPreference(@NonNull String key, @Nullable OnPreferenceSetListener<Integer>
       onPreferenceSetListener, @NonNull Integer defaultValue) {
     super(key, onPreferenceSetListener, defaultValue);
   }
