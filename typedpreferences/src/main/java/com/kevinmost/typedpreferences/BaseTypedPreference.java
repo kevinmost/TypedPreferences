@@ -1,15 +1,11 @@
-package com.kevinmost.typedpreferences.preference;
+package com.kevinmost.typedpreferences;
 
 import android.content.SharedPreferences;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.kevinmost.typedpreferences.OnPreferenceChangedListener;
-import com.kevinmost.typedpreferences.Preferences;
-
 abstract class BaseTypedPreference<T> implements TypedPreference<T> {
-
   @NonNull
   protected final String key;
 
@@ -32,13 +28,13 @@ abstract class BaseTypedPreference<T> implements TypedPreference<T> {
   @Override
   public final void set(T value) {
     ensurePreferencesSet();
-    set(preferences.getEditor(), value);
+    preferences.queueChange(this, value);
   }
 
   @Override
   public final T get() {
     ensurePreferencesSet();
-    return get(preferences.getPreferences());
+    return get(preferences.sharedPreferences);
   }
 
   @Override
@@ -49,6 +45,15 @@ abstract class BaseTypedPreference<T> implements TypedPreference<T> {
   @Override
   public final Preferences getRegisteredPreferences() {
     return preferences;
+  }
+
+  @Override
+  public final void commitChanges() {
+    preferences.commit(this);
+  }
+
+  public final boolean isRegisteredTo(Preferences preferences) {
+    return this.preferences == preferences;
   }
 
   @CallSuper

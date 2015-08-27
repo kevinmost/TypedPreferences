@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.kevinmost.typedpreferences.OnPreferenceChangedListener;
 import com.kevinmost.typedpreferences.Preferences;
-import com.kevinmost.typedpreferences.preference.TypedPreference;
+import com.kevinmost.typedpreferences.TypedPreference;
 
 public class MainActivity extends Activity {
 
@@ -39,7 +39,12 @@ public class MainActivity extends Activity {
     handler.postDelayed(new Runnable() {
       public void run() {
         secondsElapsed.set(secondsElapsed.get() + 10);
-        secondsElapsed.getRegisteredPreferences().commitChanges();
+        if ((secondsElapsed.get() / 10) % 2 == 0) {
+          secondsElapsed.commitChanges();
+        } else {
+          // This also works, might as well try use it every other time to demonstrate.
+          secondsElapsed.getRegisteredPreferences().commit(secondsElapsed);
+        }
         handler.postDelayed(this, 10000);
       }
     }, 10000);

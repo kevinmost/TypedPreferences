@@ -1,7 +1,4 @@
-package com.kevinmost.typedpreferences.preference;
-
-import com.kevinmost.typedpreferences.OnPreferenceChangedListener;
-import com.kevinmost.typedpreferences.Preferences;
+package com.kevinmost.typedpreferences;
 
 import java.util.Collections;
 import java.util.Set;
