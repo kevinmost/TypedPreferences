@@ -52,8 +52,20 @@ abstract class BaseTypedPreference<T> implements TypedPreference<T> {
     preferences.commit(this);
   }
 
+  @Override
+  public final void discardChanges() {
+    //noinspection unchecked
+    preferences.discard(this);
+  }
+
+  @Override
   public final boolean isRegisteredTo(Preferences preferences) {
     return this.preferences == preferences;
+  }
+
+  @Override
+  public final boolean hasUncommittedChanges() {
+    return preferences.preferenceQueue.get(this) != null;
   }
 
   @CallSuper

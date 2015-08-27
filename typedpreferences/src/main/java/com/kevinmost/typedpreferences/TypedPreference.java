@@ -26,6 +26,11 @@ public interface TypedPreference<T> {
   void commitChanges();
 
   /**
+   * Discard all changes made to this preference since the last time the changes were committed.
+   */
+  void discardChanges();
+
+  /**
    * Register a {@link Preferences} object that will be modified when {@link this#get()} and
    * {@link this#set(T)} are called.
    * @param preferences
@@ -36,6 +41,18 @@ public interface TypedPreference<T> {
    * @return The {@link Preferences} object last set via {@link this#register(Preferences)}.
    */
   Preferences getRegisteredPreferences();
+
+  /**
+   * @return true if {@param preferences} is the object that was passed in as a parameter the
+   * last time {@link this#register(Preferences)} was called, false otherwise.
+   */
+  boolean isRegisteredTo(Preferences preferences);
+
+  /**
+   * @return true if {@link this#set(Object)} has been called and the changes have not yet been
+   * either committed or discarded.
+   */
+  boolean hasUncommittedChanges();
 
   final class Builder<T> {
     private String key;

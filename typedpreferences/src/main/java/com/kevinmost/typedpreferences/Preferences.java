@@ -14,7 +14,7 @@ public final class Preferences {
 
   final SharedPreferences sharedPreferences;
 
-  private Map<BaseTypedPreference<?>, Object> preferenceQueue = new HashMap<>();
+  final Map<BaseTypedPreference<?>, Object> preferenceQueue = new HashMap<>();
 
   public Preferences(Context context) {
     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -36,6 +36,10 @@ public final class Preferences {
         final Object value = preferenceQueue.get(baseTypedPreference);
         //noinspection unchecked
         baseTypedPreference.set(editor, value);
+        if (baseTypedPreference.onPreferenceChangedListener != null) {
+          //noinspection unchecked
+          baseTypedPreference.onPreferenceChangedListener.onPreferenceCommitted(value);
+        }
         preferenceQueue.remove(baseTypedPreference);
       } catch (ClassCastException e) {
         Log.e("TypedPreferences", "Error while trying to cast TypedPreference to BaseTypedPreference", e);
@@ -73,6 +77,22 @@ public final class Preferences {
   }
 
   /**
+   * Discards all changes made to each element in {@param preferences}
+   */
+  public void discard(BaseTypedPreference<?>... preferences) {
+    for (BaseTypedPreference<?> preference : preferences) {
+      preferenceQueue.remove(preference);
+    }
+  }
+
+  /**
+   * Discards all changes made to each element in {@param preferences}
+   */
+  public <C extends Collection<? extends TypedPreference<?>>> void discard(C preferences) {
+    //noinspection unchecked
+    discard((BaseTypedPreference<Object>[]) preferences.toArray());
+  }
+  /**
    * Registers a {@link TypedPreference} to save its preferences into the {@link SharedPreferences}
    * object backing this {@link Preferences} object.
    */
@@ -87,5 +107,4 @@ public final class Preferences {
   <T> void queueChange(BaseTypedPreference<T> preference, T value) {
     preferenceQueue.put(preference, value);
   }
-
 }

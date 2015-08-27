@@ -25,10 +25,9 @@ public class MainActivity extends Activity {
         .setDefaultValue(0)
         .setOnPreferenceChangedListener(new OnPreferenceChangedListener<Integer>() {
           @Override
-          public void onPreferenceChanged(Integer newValue) {
+          public void onPreferenceCommitted(Integer newValue) {
             Toast.makeText(MainActivity.this,
-                "10 seconds have passed, the value is now " + newValue,
-                Toast.LENGTH_SHORT)
+                "10 seconds have passed, the value is now " + newValue, Toast.LENGTH_SHORT)
                 .show();
           }
         })
