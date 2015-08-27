@@ -1,10 +1,12 @@
-package com.kevinmost.typedpreferences.prefs;
+package com.kevinmost.typedpreferences;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+
+import com.kevinmost.typedpreferences.preference.TypedPreference;
 
 public final class Preferences {
 
@@ -12,12 +14,16 @@ public final class Preferences {
 
   private SharedPreferences.Editor editor;
 
-  private Preferences(Application app) {
-    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(app);
+  public Preferences(Context context) {
+    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
   }
 
-  public static Preferences of(@NonNull Application app) {
-    return new Preferences(app);
+  public Preferences(SharedPreferences preferences) {
+    this.sharedPreferences = preferences;
+  }
+
+  public SharedPreferences getPreferences() {
+    return sharedPreferences;
   }
 
   public SharedPreferences.Editor getEditor() {
@@ -25,6 +31,10 @@ public final class Preferences {
       discardChanges();
     }
     return editor;
+  }
+
+  public void registerPreference(TypedPreference<?> preference) {
+    preference.register(this);
   }
 
   public boolean commitChanges() {
